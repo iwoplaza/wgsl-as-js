@@ -35,6 +35,7 @@ __export(src_exports, {
   isSizeAttrib: () => isSizeAttrib,
   isWgslArray: () => isWgslArray,
   isWgslData: () => isWgslData,
+  isWgslFn: () => isWgslFn,
   isWgslStruct: () => isWgslStruct,
   mat2x2f: () => mat2x2f,
   mat3x3f: () => mat3x3f,
@@ -54,16 +55,7 @@ __export(src_exports, {
 });
 module.exports = __toCommonJS(src_exports);
 
-// src/function.ts
-var fn = (label, argTypes, returnType, body) => ({
-  type: "fn",
-  label,
-  argTypes,
-  returnType,
-  body
-});
-
-// src/wgsl.ts
+// src/data-type.ts
 var wgslTypeLiterals = [
   "bool",
   "f32",
@@ -144,6 +136,18 @@ var decorated = (inner, attrib) => {
     attribs: [...(_a = inner == null ? void 0 : inner.attribs) != null ? _a : [], attrib]
   };
 };
+
+// src/function.ts
+var fn = (label, argTypes, returnType, body) => ({
+  type: "fn",
+  label,
+  argTypes,
+  returnType,
+  body
+});
+function isWgslFn(value) {
+  return (value == null ? void 0 : value.type) === "fn";
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   array,
@@ -161,6 +165,7 @@ var decorated = (inner, attrib) => {
   isSizeAttrib,
   isWgslArray,
   isWgslData,
+  isWgslFn,
   isWgslStruct,
   mat2x2f,
   mat3x3f,

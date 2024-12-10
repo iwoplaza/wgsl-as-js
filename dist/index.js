@@ -1,13 +1,4 @@
-// src/function.ts
-var fn = (label, argTypes, returnType, body) => ({
-  type: "fn",
-  label,
-  argTypes,
-  returnType,
-  body
-});
-
-// src/wgsl.ts
+// src/data-type.ts
 var wgslTypeLiterals = [
   "bool",
   "f32",
@@ -88,6 +79,18 @@ var decorated = (inner, attrib) => {
     attribs: [...(_a = inner == null ? void 0 : inner.attribs) != null ? _a : [], attrib]
   };
 };
+
+// src/function.ts
+var fn = (label, argTypes, returnType, body) => ({
+  type: "fn",
+  label,
+  argTypes,
+  returnType,
+  body
+});
+function isWgslFn(value) {
+  return (value == null ? void 0 : value.type) === "fn";
+}
 export {
   array,
   atomic,
@@ -104,6 +107,7 @@ export {
   isSizeAttrib,
   isWgslArray,
   isWgslData,
+  isWgslFn,
   isWgslStruct,
   mat2x2f,
   mat3x3f,

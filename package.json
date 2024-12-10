@@ -17,7 +17,8 @@
 	"scripts": {
 		"dev:watch": "DEV=true tsup --watch",
 		"dev:build": "DEV=true tsup",
-		"build": "DEV=true tsup"
+		"build": "DEV=true tsup",
+		"prepublishOnly": "pnpm build"
 	},
 	"files": ["package.json", "README.md", "dist"],
 	"keywords": [],
