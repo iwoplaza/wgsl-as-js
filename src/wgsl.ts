@@ -20,6 +20,13 @@ export interface BaseWgslData {
 	readonly "~repr": unknown;
 }
 
+export type ExtractInner<T> = T extends { readonly inner: BaseWgslData }
+	? T["inner"]
+	: never;
+export type ExtractAttribs<T> = T extends { readonly attribs: unknown[] }
+	? T["attribs"]
+	: [];
+
 // #region WGSL Schema Types
 
 /**
@@ -229,6 +236,8 @@ export type AnyWgslData =
 
 // #endregion
 
+// #region Type Narrowing Functions
+
 export function isWgslData(value: unknown): value is AnyWgslData {
 	return wgslTypeLiterals.includes((value as AnyWgslData)?.type);
 }
@@ -311,3 +320,55 @@ export function isDecorated<T extends Decorated>(
 ): value is T {
 	return (value as T)?.type === "decorated";
 }
+
+// #endregion
+
+// #region Schemas / Schema Constructors
+
+export const bool = { type: "bool" } as Bool;
+export const f32 = { type: "f32" } as F32;
+export const i32 = { type: "i32" } as I32;
+export const u32 = { type: "u32" } as U32;
+export const vec2f = { type: "vec2f" } as Vec2f;
+export const vec2i = { type: "vec2i" } as Vec2i;
+export const vec2u = { type: "vec2u" } as Vec2u;
+export const vec3f = { type: "vec3f" } as Vec3f;
+export const vec3i = { type: "vec3i" } as Vec3i;
+export const vec3u = { type: "vec3u" } as Vec3u;
+export const vec4f = { type: "vec4f" } as Vec4f;
+export const vec4i = { type: "vec4i" } as Vec4i;
+export const vec4u = { type: "vec3u" } as Vec3u;
+export const mat2x2f = { type: "mat2x2f" } as Mat2x2f;
+export const mat3x3f = { type: "mat3x3f" } as Mat3x3f;
+export const mat4x4f = { type: "mat4x4f" } as Mat4x4f;
+
+export const struct = <TProps extends Record<string, BaseWgslData>>(
+	label: string | undefined,
+	propTypes: TProps,
+): WgslStruct<TProps> =>
+	({ type: "struct", label, propTypes }) as WgslStruct<TProps>;
+
+export const array = <TElement>(
+	elementType: TElement,
+	length: number,
+): WgslArray<TElement> =>
+	({ type: "array", elementType, length }) as WgslArray<TElement>;
+
+const knownAtomics = {
+	i32: { type: "atomic", inner: i32 } as Atomic<I32>,
+	u32: { type: "atomic", inner: u32 } as Atomic<U32>,
+};
+
+export const atomic = (inner: U32 | I32) => knownAtomics[inner.type];
+
+export const decorated = <TData extends BaseWgslData, TAttrib>(
+	inner: TData,
+	attrib: TAttrib,
+): Decorated<ExtractInner<TData>, [...ExtractAttribs<TData>, TAttrib]> =>
+	({
+		type: "decorated",
+		inner,
+		attribs: [...((inner as any)?.attribs ?? []), attrib],
+	}) as any;
+
+// #endregion

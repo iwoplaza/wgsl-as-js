@@ -20,6 +20,12 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
+  array: () => array,
+  atomic: () => atomic,
+  bool: () => bool,
+  decorated: () => decorated,
+  f32: () => f32,
+  i32: () => i32,
   isAlignAttrib: () => isAlignAttrib,
   isAtomic: () => isAtomic,
   isBuiltinAttrib: () => isBuiltinAttrib,
@@ -29,6 +35,20 @@ __export(src_exports, {
   isWgslArray: () => isWgslArray,
   isWgslData: () => isWgslData,
   isWgslStruct: () => isWgslStruct,
+  mat2x2f: () => mat2x2f,
+  mat3x3f: () => mat3x3f,
+  mat4x4f: () => mat4x4f,
+  struct: () => struct,
+  u32: () => u32,
+  vec2f: () => vec2f,
+  vec2i: () => vec2i,
+  vec2u: () => vec2u,
+  vec3f: () => vec3f,
+  vec3i: () => vec3i,
+  vec3u: () => vec3u,
+  vec4f: () => vec4f,
+  vec4i: () => vec4i,
+  vec4u: () => vec4u,
   wgslTypeLiterals: () => wgslTypeLiterals
 });
 module.exports = __toCommonJS(src_exports);
@@ -83,8 +103,45 @@ function isBuiltinAttrib(value) {
 function isDecorated(value) {
   return (value == null ? void 0 : value.type) === "decorated";
 }
+var bool = { type: "bool" };
+var f32 = { type: "f32" };
+var i32 = { type: "i32" };
+var u32 = { type: "u32" };
+var vec2f = { type: "vec2f" };
+var vec2i = { type: "vec2i" };
+var vec2u = { type: "vec2u" };
+var vec3f = { type: "vec3f" };
+var vec3i = { type: "vec3i" };
+var vec3u = { type: "vec3u" };
+var vec4f = { type: "vec4f" };
+var vec4i = { type: "vec4i" };
+var vec4u = { type: "vec3u" };
+var mat2x2f = { type: "mat2x2f" };
+var mat3x3f = { type: "mat3x3f" };
+var mat4x4f = { type: "mat4x4f" };
+var struct = (label, propTypes) => ({ type: "struct", label, propTypes });
+var array = (elementType, length) => ({ type: "array", elementType, length });
+var knownAtomics = {
+  i32: { type: "atomic", inner: i32 },
+  u32: { type: "atomic", inner: u32 }
+};
+var atomic = (inner) => knownAtomics[inner.type];
+var decorated = (inner, attrib) => {
+  var _a;
+  return {
+    type: "decorated",
+    inner,
+    attribs: [...(_a = inner == null ? void 0 : inner.attribs) != null ? _a : [], attrib]
+  };
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  array,
+  atomic,
+  bool,
+  decorated,
+  f32,
+  i32,
   isAlignAttrib,
   isAtomic,
   isBuiltinAttrib,
@@ -94,6 +151,20 @@ function isDecorated(value) {
   isWgslArray,
   isWgslData,
   isWgslStruct,
+  mat2x2f,
+  mat3x3f,
+  mat4x4f,
+  struct,
+  u32,
+  vec2f,
+  vec2i,
+  vec2u,
+  vec3f,
+  vec3i,
+  vec3u,
+  vec4f,
+  vec4i,
+  vec4u,
   wgslTypeLiterals
 });
 //# sourceMappingURL=index.cjs.map

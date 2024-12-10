@@ -473,6 +473,12 @@ interface BaseWgslData {
     /** Type-token, not available at runtime */
     readonly "~repr": unknown;
 }
+type ExtractInner<T> = T extends {
+    readonly inner: BaseWgslData;
+} ? T["inner"] : never;
+type ExtractAttribs<T> = T extends {
+    readonly attribs: unknown[];
+} ? T["attribs"] : [];
 /**
  * Boolean schema representing a single WGSL bool value.
  * Cannot be used inside buffers as it is not host-shareable.
@@ -645,5 +651,25 @@ declare function isSizeAttrib<T extends Size<number>>(value: unknown | T): value
 declare function isLocationAttrib<T extends Location<number>>(value: unknown | T): value is T;
 declare function isBuiltinAttrib<T extends Builtin<string>>(value: unknown | T): value is T;
 declare function isDecorated<T extends Decorated>(value: unknown | T): value is T;
+declare const bool: Bool;
+declare const f32: F32;
+declare const i32: I32;
+declare const u32: U32;
+declare const vec2f: Vec2f;
+declare const vec2i: Vec2i;
+declare const vec2u: Vec2u;
+declare const vec3f: Vec3f;
+declare const vec3i: Vec3i;
+declare const vec3u: Vec3u;
+declare const vec4f: Vec4f;
+declare const vec4i: Vec4i;
+declare const vec4u: Vec3u;
+declare const mat2x2f: Mat2x2f;
+declare const mat3x3f: Mat3x3f;
+declare const mat4x4f: Mat4x4f;
+declare const struct: <TProps extends Record<string, BaseWgslData>>(label: string | undefined, propTypes: TProps) => WgslStruct<TProps>;
+declare const array: <TElement>(elementType: TElement, length: number) => WgslArray<TElement>;
+declare const atomic: (inner: U32 | I32) => Atomic<I32> | Atomic<U32>;
+declare const decorated: <TData extends BaseWgslData, TAttrib>(inner: TData, attrib: TAttrib) => Decorated<ExtractInner<TData>, [...ExtractAttribs<TData>, TAttrib]>;
 
-export { type Align, type AnyWgslData, type Atomic, type BaseWgslData, type Bool, type Builtin, type Decorated, type F32, type I32, type Infer, type InferRecord, type Location, type Mat2x2f, type Mat3x3f, type Mat4x4f, type Size, type U32, type Vec2f, type Vec2i, type Vec2u, type Vec3f, type Vec3i, type Vec3u, type Vec4f, type Vec4i, type Vec4u, type WgslArray, type WgslStruct, type WgslTypeLiteral, isAlignAttrib, isAtomic, isBuiltinAttrib, isDecorated, isLocationAttrib, isSizeAttrib, isWgslArray, isWgslData, isWgslStruct, type m2x2f, type m3x3f, type m4x4f, type mat2x2, type mat3x3, type mat4x4, type matBase, type v2f, type v2i, type v2u, type v3f, type v3i, type v3u, type v4f, type v4i, type v4u, wgslTypeLiterals };
+export { type Align, type AnyWgslData, type Atomic, type BaseWgslData, type Bool, type Builtin, type Decorated, type ExtractAttribs, type ExtractInner, type F32, type I32, type Infer, type InferRecord, type Location, type Mat2x2f, type Mat3x3f, type Mat4x4f, type Size, type U32, type Vec2f, type Vec2i, type Vec2u, type Vec3f, type Vec3i, type Vec3u, type Vec4f, type Vec4i, type Vec4u, type WgslArray, type WgslStruct, type WgslTypeLiteral, array, atomic, bool, decorated, f32, i32, isAlignAttrib, isAtomic, isBuiltinAttrib, isDecorated, isLocationAttrib, isSizeAttrib, isWgslArray, isWgslData, isWgslStruct, type m2x2f, type m3x3f, type m4x4f, type mat2x2, mat2x2f, type mat3x3, mat3x3f, type mat4x4, mat4x4f, type matBase, struct, u32, type v2f, type v2i, type v2u, type v3f, type v3i, type v3u, type v4f, type v4i, type v4u, vec2f, vec2i, vec2u, vec3f, vec3i, vec3u, vec4f, vec4i, vec4u, wgslTypeLiterals };
