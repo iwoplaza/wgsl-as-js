@@ -1,0 +1,30 @@
+{
+	"name": "wgsl-as-js",
+	"type": "module",
+	"version": "0.0.0",
+	"description": "A way to describe WGSL code as JS values, with rich type information and reified references.",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"module": "./dist/index.js",
+			"import": "./dist/index.js",
+			"default": "./dist/index.cjs"
+		}
+	},
+	"sideEffects": false,
+	"scripts": {
+		"dev:watch": "DEV=true tsup --watch",
+		"dev:build": "DEV=true tsup",
+		"build": "DEV=true tsup"
+	},
+	"keywords": [],
+	"license": "MIT",
+	"packageManager": "pnpm@8.15.8+sha256.691fe176eea9a8a80df20e4976f3dfb44a04841ceb885638fe2a26174f81e65e",
+	"devDependencies": {
+		"@types/node": "^22.10.1",
+		"tsup": "^8.0.2",
+		"typescript": "^5.3.3"
+	}
+}
