@@ -1,4 +1,8 @@
-export interface WgslFn<TArgs, TReturn> {
+export interface WgslFn<
+	TArgs extends unknown[] = unknown[],
+	TReturn = unknown,
+> {
+	readonly type: "fn";
 	readonly label: string | undefined;
 	readonly argTypes: TArgs;
 	readonly returnType: TReturn;
@@ -17,3 +21,7 @@ export const fn = <TArgs extends unknown[] | [], TReturn>(
 	returnType,
 	body,
 });
+
+export function isWgslFn<T extends WgslFn>(value: unknown | T): value is T {
+	return (value as T)?.type === "fn";
+}
