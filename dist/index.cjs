@@ -25,6 +25,7 @@ __export(src_exports, {
   bool: () => bool,
   decorated: () => decorated,
   f32: () => f32,
+  fn: () => fn,
   i32: () => i32,
   isAlignAttrib: () => isAlignAttrib,
   isAtomic: () => isAtomic,
@@ -52,6 +53,15 @@ __export(src_exports, {
   wgslTypeLiterals: () => wgslTypeLiterals
 });
 module.exports = __toCommonJS(src_exports);
+
+// src/function.ts
+var fn = (label, argTypes, returnType, body) => ({
+  type: "fn",
+  label,
+  argTypes,
+  returnType,
+  body
+});
 
 // src/wgsl.ts
 var wgslTypeLiterals = [
@@ -141,6 +151,7 @@ var decorated = (inner, attrib) => {
   bool,
   decorated,
   f32,
+  fn,
   i32,
   isAlignAttrib,
   isAtomic,

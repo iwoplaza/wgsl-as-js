@@ -1,3 +1,17 @@
+interface WgslFn<TArgs, TReturn> {
+    readonly label: string | undefined;
+    readonly argTypes: TArgs;
+    readonly returnType: TReturn;
+    readonly body: unknown;
+}
+declare const fn: <TArgs extends unknown[] | [], TReturn>(label: string | undefined, argTypes: TArgs, returnType: TReturn, body: unknown) => {
+    type: string;
+    label: string | undefined;
+    argTypes: TArgs;
+    returnType: TReturn;
+    body: unknown;
+};
+
 /**
  * Extracts the inferred representation of a resource.
  * @example
@@ -672,4 +686,4 @@ declare const array: <TElement>(elementType: TElement, length: number) => WgslAr
 declare const atomic: (inner: U32 | I32) => Atomic<I32> | Atomic<U32>;
 declare const decorated: <TData extends BaseWgslData, TAttrib>(inner: TData, attrib: TAttrib) => Decorated<ExtractInner<TData>, [...ExtractAttribs<TData>, TAttrib]>;
 
-export { type Align, type AnyWgslData, type Atomic, type BaseWgslData, type Bool, type Builtin, type Decorated, type ExtractAttribs, type ExtractInner, type F32, type I32, type Infer, type InferRecord, type Location, type Mat2x2f, type Mat3x3f, type Mat4x4f, type Size, type U32, type Vec2f, type Vec2i, type Vec2u, type Vec3f, type Vec3i, type Vec3u, type Vec4f, type Vec4i, type Vec4u, type WgslArray, type WgslStruct, type WgslTypeLiteral, array, atomic, bool, decorated, f32, i32, isAlignAttrib, isAtomic, isBuiltinAttrib, isDecorated, isLocationAttrib, isSizeAttrib, isWgslArray, isWgslData, isWgslStruct, type m2x2f, type m3x3f, type m4x4f, type mat2x2, mat2x2f, type mat3x3, mat3x3f, type mat4x4, mat4x4f, type matBase, struct, u32, type v2f, type v2i, type v2u, type v3f, type v3i, type v3u, type v4f, type v4i, type v4u, vec2f, vec2i, vec2u, vec3f, vec3i, vec3u, vec4f, vec4i, vec4u, wgslTypeLiterals };
+export { type Align, type AnyWgslData, type Atomic, type BaseWgslData, type Bool, type Builtin, type Decorated, type ExtractAttribs, type ExtractInner, type F32, type I32, type Infer, type InferRecord, type Location, type Mat2x2f, type Mat3x3f, type Mat4x4f, type Size, type U32, type Vec2f, type Vec2i, type Vec2u, type Vec3f, type Vec3i, type Vec3u, type Vec4f, type Vec4i, type Vec4u, type WgslArray, type WgslFn, type WgslStruct, type WgslTypeLiteral, array, atomic, bool, decorated, f32, fn, i32, isAlignAttrib, isAtomic, isBuiltinAttrib, isDecorated, isLocationAttrib, isSizeAttrib, isWgslArray, isWgslData, isWgslStruct, type m2x2f, type m3x3f, type m4x4f, type mat2x2, mat2x2f, type mat3x3, mat3x3f, type mat4x4, mat4x4f, type matBase, struct, u32, type v2f, type v2i, type v2u, type v3f, type v3i, type v3u, type v4f, type v4i, type v4u, vec2f, vec2i, vec2u, vec3f, vec3i, vec3u, vec4f, vec4i, vec4u, wgslTypeLiterals };

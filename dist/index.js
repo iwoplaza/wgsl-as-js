@@ -1,3 +1,12 @@
+// src/function.ts
+var fn = (label, argTypes, returnType, body) => ({
+  type: "fn",
+  label,
+  argTypes,
+  returnType,
+  body
+});
+
 // src/wgsl.ts
 var wgslTypeLiterals = [
   "bool",
@@ -85,6 +94,7 @@ export {
   bool,
   decorated,
   f32,
+  fn,
   i32,
   isAlignAttrib,
   isAtomic,
