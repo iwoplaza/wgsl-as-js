@@ -2,7 +2,21 @@
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -121,7 +135,7 @@ var vec4u = { type: "vec3u" };
 var mat2x2f = { type: "mat2x2f" };
 var mat3x3f = { type: "mat3x3f" };
 var mat4x4f = { type: "mat4x4f" };
-var struct = (label, propTypes) => ({ type: "struct", label, propTypes });
+var struct = (options) => __spreadValues({ type: "struct" }, options);
 var array = (elementType, length) => ({ type: "array", elementType, length });
 var knownAtomics = {
   i32: { type: "atomic", inner: i32 },
@@ -138,13 +152,9 @@ var decorated = (inner, attrib) => {
 };
 
 // src/function.ts
-var fn = (label, argTypes, returnType, body) => ({
-  type: "fn",
-  label,
-  argTypes,
-  returnType,
-  body
-});
+var fn = (options) => __spreadValues({
+  type: "fn"
+}, options);
 function isWgslFn(value) {
   return (value == null ? void 0 : value.type) === "fn";
 }

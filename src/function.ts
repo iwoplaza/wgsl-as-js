@@ -1,3 +1,5 @@
+import type { Source } from "./doc";
+
 export interface WgslFn<
 	TArgs extends unknown[] = unknown[],
 	TReturn = unknown,
@@ -7,19 +9,22 @@ export interface WgslFn<
 	readonly argTypes: TArgs;
 	readonly returnType: TReturn;
 	readonly body: unknown;
+	readonly src?: Source;
 }
 
+export type WgslFnOptions<TArgs extends unknown[] | [], TReturn> = {
+	readonly label: string | undefined;
+	readonly argTypes: TArgs;
+	readonly returnType: TReturn;
+	readonly body: unknown;
+	readonly src?: Source;
+};
+
 export const fn = <TArgs extends unknown[] | [], TReturn>(
-	label: string | undefined,
-	argTypes: TArgs,
-	returnType: TReturn,
-	body: unknown,
-) => ({
-	type: "fn",
-	label,
-	argTypes,
-	returnType,
-	body,
+	options: WgslFnOptions<TArgs, TReturn>,
+): WgslFn<TArgs, TReturn> => ({
+	type: "fn" as const,
+	...options,
 });
 
 export function isWgslFn<T extends WgslFn>(value: unknown | T): value is T {

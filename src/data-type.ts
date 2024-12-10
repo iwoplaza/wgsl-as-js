@@ -1,3 +1,4 @@
+import type { Source } from "./doc";
 import type { Infer, InferRecord } from "./infer";
 import type {
 	v2f,
@@ -134,6 +135,7 @@ export interface WgslStruct<
 	readonly type: "struct";
 	readonly label?: string | undefined;
 	readonly propTypes: TProps;
+	readonly src?: Source;
 	/** Type-token, not available at runtime */
 	readonly "~repr": InferRecord<TProps>;
 }
@@ -342,11 +344,15 @@ export const mat2x2f = { type: "mat2x2f" } as Mat2x2f;
 export const mat3x3f = { type: "mat3x3f" } as Mat3x3f;
 export const mat4x4f = { type: "mat4x4f" } as Mat4x4f;
 
+export type WgslStructOptions<TProps extends Record<string, BaseWgslData>> = {
+	label: string | undefined;
+	propTypes: TProps;
+	src?: Source;
+};
+
 export const struct = <TProps extends Record<string, BaseWgslData>>(
-	label: string | undefined,
-	propTypes: TProps,
-): WgslStruct<TProps> =>
-	({ type: "struct", label, propTypes }) as WgslStruct<TProps>;
+	options: WgslStructOptions<TProps>,
+): WgslStruct<TProps> => ({ type: "struct", ...options }) as WgslStruct<TProps>;
 
 export const array = <TElement>(
 	elementType: TElement,
